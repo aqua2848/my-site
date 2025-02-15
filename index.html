@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Zomboid Skillbook Checker</title>
+    <style>
+        td {
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .checked {
+            background-color: #90EE90; /* light green */
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Vol1</th>
+                <th>Vol2</th>
+                <th>Vol3</th>
+                <th>Vol4</th>
+                <th>Vol5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-skill="大工">
+                <td>大工</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="医療">
+                <td>医療</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="採集">
+                <td>採集</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="罠猟">
+                <td>罠猟</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="耕作">
+                <td>耕作</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="裁縫">
+                <td>裁縫</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="調理">
+                <td>調理</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="車両">
+                <td>車両</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="金属">
+                <td>金属</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="釣り">
+                <td>釣り</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+            <tr data-skill="電気">
+                <td>電気</td>
+                <td onclick="toggleCheck(this, 1)">1</td>
+                <td onclick="toggleCheck(this, 2)">2</td>
+                <td onclick="toggleCheck(this, 3)">3</td>
+                <td onclick="toggleCheck(this, 4)">4</td>
+                <td onclick="toggleCheck(this, 5)">5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function toggleCheck(tdElement, vol) {
+            const skill = tdElement.parentElement.getAttribute('data-skill');
+            const key = `${skill}-vol${vol}`;
+
+            if (tdElement.classList.contains('checked')) {
+                tdElement.classList.remove('checked');
+                localStorage.setItem(key, 'false');
+            } else {
+                tdElement.classList.add('checked');
+                localStorage.setItem(key, 'true');
+            }
+        }
+
+        // Check local storage for previously saved data and update the table accordingly
+        window.onload = function () {
+            const rows = document.querySelectorAll('[data-skill]');
+            rows.forEach(row => {
+                const skill = row.getAttribute('data-skill');
+                for (let vol = 1; vol <= 5; vol++) {
+                    const key = `${skill}-vol${vol}`;
+                    const status = localStorage.getItem(key);
+                    const tdElement = row.querySelector(`td:nth-child(${vol + 1})`);
+                    if (status === 'true') {
+                        tdElement.classList.add('checked');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
